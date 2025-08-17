@@ -1,60 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- URLs (Recuerda reemplazar) ---
+    // -------------------------------------------------------------------
+    // ¡¡¡IMPORTANTE!!! REEMPLAZA ESTA LÍNEA CON TU URL
+    // -------------------------------------------------------------------
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbykudCYVnzz4-nO-Q_oZmYCbXrbQg7xMU9tcsbJ-dH25FA9cfJqlojMiCpR2QD9iEjV/exec'; 
+    // -------------------------------------------------------------------
 
-    // --- ELEMENTOS DEL DOM ---
-    const menuPrincipal = document.getElementById('menu-principal');
-    const proyectoContainer = document.getElementById('proyecto-container');
-    const btnsBack = document.querySelectorAll('.btn-back');
-    const btnsLogout = document.querySelectorAll('.btn-logout'); // Nuevo
-    
-    // Vistas y Login
-    const loginScreen = document.getElementById('login-screen');
-    const vistaVendedor = document.getElementById('vista-vendedor');
-    const vistaSupervisor = document.getElementById('vista-supervisor');
-    const btnLogin = document.getElementById('btn-login');
-
-    // --- NAVEGACIÓN ---
-    // (El código de navegación y lógica de los botones principales no cambia)
-    
-    // --- NUEVA LÓGICA DE CERRAR SESIÓN ---
-    btnsLogout.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Esconde todas las vistas internas
-            vistaVendedor.classList.add('hidden');
-            vistaSupervisor.classList.add('hidden');
-            
-            // Esconde el contenedor principal del proyecto
-            proyectoContainer.classList.add('hidden');
-            
-            // Muestra el menú principal
-            menuPrincipal.classList.remove('hidden');
-
-            // Limpia los campos de login para la próxima vez
-            document.getElementById('input-user').value = '';
-            document.getElementById('input-pass').value = '';
-        });
-    });
-    
-    // (El resto del código de app.js permanece igual: login, calculadoras, etc.)
-    // A continuación, el código completo y funcional para evitar errores.
-});
-
-// --- CÓDIGO COMPLETO Y FINAL DE APP.JS ---
-document.addEventListener('DOMContentLoaded', () => {
-    // --- URL ---
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbykudCYVnzz4-nO-Q_oZmYCbXrbQg7xMU9tcsbJ-dH25FA9cfJqlojMiCpR2QD9iEjV/exec'; 
-
-    // --- DOM Elements ---
+    // --- ELEMENTOS DEL DOM (COMPLETOS) ---
     const menuPrincipal = document.getElementById('menu-principal');
     const btnShowIva = document.getElementById('btn-show-iva');
     const btnShowRenta = document.getElementById('btn-show-renta');
     const btnShowProyecto = document.getElementById('btn-show-proyecto');
+    const btnsBack = document.querySelectorAll('.btn-back');
+    const btnsLogout = document.querySelectorAll('.btn-logout');
     const calcIvaContainer = document.getElementById('calculadora-iva');
     const calcRentaContainer = document.getElementById('calculadora-renta');
     const proyectoContainer = document.getElementById('proyecto-container');
-    const btnsBack = document.querySelectorAll('.btn-back');
-    const btnsLogout = document.querySelectorAll('.btn-logout');
+    const montoBaseIva = document.getElementById('monto-base-iva');
+    const ivaCalculado = document.getElementById('iva-calculado');
+    const totalIva = document.getElementById('total-iva');
+    const montoBaseRenta = document.getElementById('monto-base-renta');
+    const rentaCalculada = document.getElementById('renta-calculada');
+    const totalRenta = document.getElementById('total-renta');
     const loginScreen = document.getElementById('login-screen');
     const inputUser = document.getElementById('input-user');
     const inputPass = document.getElementById('input-pass');
@@ -74,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCrearUsuario = document.getElementById('btn-crear-usuario');
     let currentUser = null; 
 
-    // --- NAVIGATION ---
+    // --- NAVEGACIÓN ---
     btnShowIva.addEventListener('click', () => { menuPrincipal.classList.add('hidden'); calcIvaContainer.classList.remove('hidden'); });
     btnShowRenta.addEventListener('click', () => { menuPrincipal.classList.add('hidden'); calcRentaContainer.classList.remove('hidden'); });
     btnShowProyecto.addEventListener('click', () => {
@@ -94,7 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
             loginError.classList.add('hidden');
         });
     });
-
     btnsLogout.forEach(btn => {
         btn.addEventListener('click', () => {
             vistaVendedor.classList.add('hidden');
@@ -107,7 +72,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- LOGIC (Login, Add Sale, Create User, Calculators) ---
+    // --- LÓGICA CALCULADORAS ---
+    montoBaseIva.addEventListener('input', () => { const monto = parseFloat(montoBaseIva.value) || 0; const iva = monto * 0.13; totalIva.value = (monto + iva).toFixed(2); ivaCalculado.value = iva.toFixed(2); });
+    montoBaseRenta.addEventListener('input', () => { const monto = parseFloat(montoBaseRenta.value) || 0; const renta = monto * 0.10; totalRenta.value = (monto - renta).toFixed(2); rentaCalculada.value = renta.toFixed(2); });
+
+    // --- LÓGICA DE LOGIN ---
     btnLogin.addEventListener('click', () => {
         const username = inputUser.value.trim(); const password = inputPass.value.trim();
         if (!username || !password) { loginError.textContent = 'Ingresa usuario y contraseña.'; loginError.classList.remove('hidden'); return; }
@@ -123,16 +92,69 @@ document.addEventListener('DOMContentLoaded', () => {
             .finally(() => { btnLogin.textContent = 'Ingresar'; btnLogin.disabled = false; });
     });
 
+    // --- LÓGICA DE AGREGAR VENTA (CORREGIDA) ---
     btnAgregarVenta.addEventListener('click', () => {
-        // (La lógica no cambia)
+        if (!inputFecha.value || !inputPaquete.value || !inputPrecio.value) { alert('Completa todos los campos.'); return; }
+        const ventaData = { action: 'agregarVenta', vendedor: currentUser, mes: inputMes.value, fecha: inputFecha.value, paquete: inputPaquete.value, precio: parseFloat(inputPrecio.value) };
+        btnAgregarVenta.textContent = 'Guardando...'; btnAgregarVenta.disabled = true;
+        
+        // Esta es la parte corregida para que funcione en Live Server
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors', // Importante para evitar el error de CORS en desarrollo
+            cache: 'no-cache',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(ventaData),
+            redirect: 'follow',
+        })
+        .then(() => {
+            // Como usamos 'no-cors', no podemos leer la respuesta, pero asumimos que fue exitosa.
+            alert('¡Venta guardada con éxito!');
+            inputPaquete.value = '';
+            inputPrecio.value = '';
+            inputFecha.value = '';
+            inputPaquete.focus();
+        })
+        .catch(err => {
+            console.error('Error:', err);
+            alert('Hubo un error al guardar la venta. Revisa la consola.');
+        })
+        .finally(() => {
+            btnAgregarVenta.textContent = 'Agregar Venta';
+            btnAgregarVenta.disabled = false;
+        });
     });
     
+    // --- LÓGICA DE CREAR USUARIO ---
     btnCrearUsuario.addEventListener('click', () => {
-        // (La lógica no cambia)
+        const nuevoUsuario = inputNuevoUser.value.trim(); const nuevaPassword = inputNuevaPass.value.trim(); const nuevoRol = selectNuevoRol.value;
+        if (!nuevoUsuario || !nuevaPassword) { alert('Completa usuario y contraseña.'); return; }
+        btnCrearUsuario.textContent = 'Creando...'; btnCrearUsuario.disabled = true;
+        const userData = { action: 'crearUsuario', nuevoUsuario, nuevaPassword, nuevoRol };
+        
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            cache: 'no-cache',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(userData),
+            redirect: 'follow',
+        })
+        .then(() => {
+            alert(`¡Usuario "${nuevoUsuario}" creado con éxito!`);
+            inputNuevoUser.value = '';
+            inputNuevaPass.value = '';
+        })
+        .catch(err => {
+            console.error('Error:', err);
+            alert('Hubo un error al crear el usuario.');
+        })
+        .finally(() => {
+            btnCrearUsuario.textContent = 'Crear Usuario';
+            btnCrearUsuario.disabled = false;
+        });
     });
 
-    // (La lógica de las calculadoras no cambia)
-    
     // --- SERVICE WORKER ---
     if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js'); }); }
 });
