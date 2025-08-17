@@ -62,7 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
     montoBaseRenta.addEventListener('input', () => {
         const monto = parseFloat(montoBaseRenta.value) || 0;
         const renta = monto * 0.10;
-        const total = monto + renta;
+        // --- AQUÍ ESTÁ EL CAMBIO ---
+        const total = monto - renta; // Se cambió de '+' a '-'
 
         rentaCalculada.value = renta.toFixed(2);
         totalRenta.value = total.toFixed(2);
@@ -76,7 +77,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const anio = fecha.getFullYear();
         const meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
         const nombreMes = meses[fecha.getMonth()];
-        // Formateamos la fecha para que coincida exactamente con la imagen: "17 de Agosto del 2025"
         elemento.textContent = `Fecha del Sistema: ${dia} de ${nombreMes} del ${anio}`;
     }
 
@@ -85,7 +85,6 @@ document.addEventListener('DOMContentLoaded', () => {
         palabras.textContent = 'SON:';
     }
 
-    // Función para convertir número a letras
     function numeroALetras(n, moneda) {
         if (n === 0) return `CERO CON 00/100 ${moneda}`;
         const entero = Math.floor(n);
@@ -114,7 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 return `${centenas[c]} ${convertir(resto)}`;
             }
              if (num === 1000) return "MIL";
-            // Lógica para números mayores a 1000
             if (num < 2000) return `MIL ${convertir(num % 1000)}`;
             if (num < 1000000) {
                 const miles = Math.floor(num / 1000);
@@ -141,3 +139,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
