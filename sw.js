@@ -1,12 +1,12 @@
-const CACHE_NAME = 'calculadora-sv-cache-v1';
+const CACHE_NAME = 'calculadora-sv-cache-v2'; // Cambié a v2 para forzar la actualización
 const urlsToCache = [
     '/',
     'index.html',
     'style.css',
-    'app.js'
+    'app.js',
+    'manifest.json'
 ];
 
-// Instala el Service Worker y guarda los archivos base en la caché
 self.addEventListener('install', event => {
     event.waitUntil(
         caches.open(CACHE_NAME)
@@ -17,13 +17,26 @@ self.addEventListener('install', event => {
     );
 });
 
-// Intercepta las peticiones y responde desde la caché si es posible
 self.addEventListener('fetch', event => {
     event.respondWith(
         caches.match(event.request)
             .then(response => {
-                // Si el archivo está en caché, lo devuelve. Si no, lo busca en la red.
                 return response || fetch(event.request);
             })
     );
+});
+
+self.addEventListener('activate', event => {
+  const cacheWhitelist = [CACHE_NAME];
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
 });
