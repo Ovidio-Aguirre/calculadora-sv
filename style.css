@@ -5,18 +5,22 @@
     box-sizing: border-box;
 }
 
+html, body {
+    height: 100%;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #f0f2f5;
     color: #333;
     display: flex;
-    flex-direction: column; /* Organiza el main y el footer verticalmente */
-    min-height: 100vh;
+    flex-direction: column;
+    margin: 0;
 }
 
 /* --- CONTENEDOR PRINCIPAL --- */
 main {
-    flex-grow: 1; /* Hace que el contenido principal ocupe todo el espacio disponible */
+    flex: 1 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -31,7 +35,6 @@ main {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
-    transition: all 0.3s ease;
 }
 
 h1, h2, h3 {
@@ -40,27 +43,10 @@ h1, h2, h3 {
     margin-bottom: 24px;
 }
 
-h1 {
-    font-size: 28px;
-}
-
-h2 {
-    font-size: 24px;
-}
-
-h3 {
-    font-size: 18px;
-    font-weight: 500;
-    margin-top: 20px;
-    border-top: 1px solid #eee;
-    padding-top: 20px;
-}
-
-hr {
-    border: none;
-    border-top: 1px solid #eee;
-    margin: 20px 0;
-}
+h1 { font-size: 28px; }
+h2 { font-size: 24px; }
+h3 { font-size: 18px; font-weight: 500; margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px; }
+hr { border: none; border-top: 1px solid #eee; margin: 20px 0; }
 
 /* --- ESTILOS DE FORMULARIO --- */
 .form-group {
@@ -89,8 +75,14 @@ hr {
 .form-group input:focus,
 .form-group select:focus {
     outline: none;
-    border-color: #7B1FA2; /* Color morado al enfocar */
+    border-color: #7B1FA2;
     box-shadow: 0 0 0 3px rgba(123, 31, 162, 0.2);
+}
+
+input[readonly] {
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    cursor: not-allowed;
 }
 
 /* --- ESTILOS DE BOTONES --- */
@@ -118,10 +110,7 @@ hr {
 .btn-purple { background-color: #7B1FA2; }
 .btn-purple:hover { background-color: #6A1B9A; }
 
-.btn-secondary {
-    background-color: #6c757d;
-    margin-top: 16px;
-}
+.btn-secondary { background-color: #6c757d; margin-top: 16px; }
 .btn-secondary:hover { background-color: #5a6268; }
 
 .btn-back {
@@ -133,8 +122,8 @@ hr {
     color: #888;
     padding: 0;
     font-weight: 500;
-    width: auto; /* Para que no ocupe todo el ancho */
-    display: inline-block; /* Para que no ocupe todo el ancho */
+    width: auto;
+    display: inline-block;
 }
 
 /* --- OTROS ESTILOS --- */
@@ -149,12 +138,12 @@ hr {
     font-weight: 500;
 }
 
-/* --- FOOTER (CORREGIDO) --- */
+/* --- FOOTER --- */
 footer {
+    flex-shrink: 0;
     width: 100%;
     text-align: center;
     padding: 15px;
-    flex-shrink: 0; /* Evita que el footer se encoja */
 }
 
 footer p {
