@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadoras SV</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="menu-principal">
+        <h1>Elige una opción</h1>
+        <button id="btn-show-iva">Calculadora de IVA (13%)</button>
+        <button id="btn-show-renta">Calculadora de Renta (10%)</button>
+    </div>
+
+    <div id="calculadora-iva" class="calculadora-container hidden">
+        <button class="btn-back">← Volver</button>
+        <h2>Calculadora de IVA (13%)</h2>
+        <div class="form-group">
+            <label for="monto-base-iva">Monto Base</label>
+            <input type="number" id="monto-base-iva" placeholder="0.00">
+        </div>
+        <div class="form-group">
+            <label for="iva-calculado">IVA 13%</label>
+            <input type="text" id="iva-calculado" readonly>
+        </div>
+        <div class="form-group">
+            <label for="total-iva">Total</label>
+            <input type="text" id="total-iva" readonly>
+        </div>
+        <p id="total-palabras-iva" class="total-palabras">SON:</p>
+        <p id="fecha-sistema-iva" class="fecha-sistema"></p>
+    </div>
+
+    <div id="calculadora-renta" class="calculadora-container hidden">
+        <button class="btn-back">← Volver</button>
+        <h2>Calculadora de Renta (10%)</h2>
+        <div class="form-group">
+            <label for="monto-base-renta">Monto Base</label>
+            <input type="number" id="monto-base-renta" placeholder="0.00">
+        </div>
+        <div class="form-group">
+            <label for="renta-calculada">Renta 10%</label>
+            <input type="text" id="renta-calculada" readonly>
+        </div>
+        <div class="form-group">
+            <label for="total-renta">Total</label>
+            <input type="text" id="total-renta" readonly>
+        </div>
+        <p id="total-palabras-renta" class="total-palabras">SON:</p>
+        <p id="fecha-sistema-renta" class="fecha-sistema"></p>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
