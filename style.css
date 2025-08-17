@@ -1,152 +1,164 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+/* --- RESET Y CONFIGURACIÓN GLOBAL --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-color: #f0f2f5;
+    color: #333;
+    display: flex;
+    flex-direction: column; /* Organiza el main y el footer verticalmente */
+    min-height: 100vh;
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+main {
+    flex-grow: 1; /* Hace que el contenido principal ocupe todo el espacio disponible */
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    padding: 15px;
-    box-sizing: border-box;
-    color: #333;
+    padding: 20px;
 }
 
-#menu-principal {
-    text-align: center;
-}
-
-#menu-principal h1 {
-    margin-bottom: 2rem;
-    color: #555;
-}
-
-#menu-principal button {
-    display: block;
-    width: 250px;
-    padding: 15px;
-    margin: 10px auto;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-#menu-principal button:hover {
-    background-color: #0056b3;
-}
-
-.calculadora-container {
+/* --- DISEÑO DE TARJETA --- */
+.card-container {
     background-color: #ffffff;
     padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 350px;
-    box-sizing: border-box;
+    max-width: 400px;
+    transition: all 0.3s ease;
 }
 
+h1, h2, h3 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 24px;
+}
+
+h1 {
+    font-size: 28px;
+}
+
+h2 {
+    font-size: 24px;
+}
+
+h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 20px 0;
+}
+
+/* --- ESTILOS DE FORMULARIO --- */
 .form-group {
-    margin-bottom: 15px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    margin-bottom: 16px;
 }
 
 .form-group label {
     font-weight: 500;
-    color: #666;
-    flex-shrink: 0;
-    margin-right: 10px;
-}
-
-.form-group input, select {
-    width: 166px;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
-    font-family: 'Roboto', sans-serif;
-    box-sizing: border-box;
-}
-
-input[type="text"], input[type="number"] {
-    text-align: right;
-}
-
-input[readonly] {
-    background-color: #e9ecef;
-    border: 1px solid #ced4da;
-    cursor: not-allowed;
-}
-
-.total-palabras, .fecha-sistema {
-    margin-top: 20px;
-    font-size: 14px;
+    margin-bottom: 8px;
     color: #555;
 }
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: #7B1FA2; /* Color morado al enfocar */
+    box-shadow: 0 0 0 3px rgba(123, 31, 162, 0.2);
+}
+
+/* --- ESTILOS DE BOTONES --- */
+.btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary { background-color: #007bff; }
+.btn-primary:hover { background-color: #0056b3; }
+
+.btn-purple { background-color: #7B1FA2; }
+.btn-purple:hover { background-color: #6A1B9A; }
+
+.btn-secondary {
+    background-color: #6c757d;
+    margin-top: 16px;
+}
+.btn-secondary:hover { background-color: #5a6268; }
 
 .btn-back {
     background: none;
     border: none;
-    font-size: 20px;
+    font-size: 16px;
     cursor: pointer;
     margin-bottom: 15px;
     color: #888;
     padding: 0;
+    font-weight: 500;
+    width: auto; /* Para que no ocupe todo el ancho */
+    display: inline-block; /* Para que no ocupe todo el ancho */
 }
 
+/* --- OTROS ESTILOS --- */
 .hidden {
     display: none;
 }
 
-.btn-proyecto {
-    background-color: #28a745;
-}
-.btn-proyecto:hover {
-    background-color: #218838;
-}
-
-#form-ventas button, #resumen-ventas button {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-    margin-top: 15px;
-}
-#btn-ver-reporte {
-    background-color: #17a2b8;
-}
-
-#resumen-ventas hr {
-    margin: 20px 0;
-    border: 0;
-    border-top: 1px solid #eee;
-}
-.resumen-linea {
-    display: flex;
-    justify-content: space-between;
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-.resumen-linea span:first-child {
-    font-weight: 500;
-}
 .error-msg {
     color: #dc3545;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 15px;
+    font-weight: 500;
 }
-#vista-supervisor ul {
-    list-style-position: inside;
-    padding-left: 0;
+
+/* --- FOOTER (CORREGIDO) --- */
+footer {
+    width: 100%;
+    text-align: center;
+    padding: 15px;
+    flex-shrink: 0; /* Evita que el footer se encoja */
+}
+
+footer p {
+    font-size: 12px;
+    color: #aaa;
 }
 
