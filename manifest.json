@@ -1,20 +1,20 @@
 {
-    "name": "Calculadoras SV",
-    "short_name": "CalcSV",
-    "description": "Calculadora de IVA, Renta y Ventas para El Salvador",
+    "name": "Sistema de Ventas SV",
+    "short_name": "VentasSV",
+    "description": "Calculadora y Sistema de Ventas para El Salvador",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#f0f2f5",
-    "theme_color": "#007bff",
+    "background_color": "#ffffff",
+    "theme_color": "#7B1FA2",
     "icons": [
         {
-            "src": "https://www.gstatic.com/images/branding/product/1x/drive_2020q4_48dp.png",
+            "src": "https://www.gstatic.com/images/branding/product/2x/apps_script_128dp.png",
             "sizes": "192x192",
             "type": "image/png",
             "purpose": "any maskable"
         },
         {
-            "src": "https://www.gstatic.com/images/branding/product/1x/drive_2020q4_48dp.png",
+            "src": "https://www.gstatic.com/images/branding/product/2x/apps_script_128dp.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any maskable"
