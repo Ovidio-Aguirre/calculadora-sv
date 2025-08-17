@@ -64,14 +64,18 @@ body {
     margin-right: 10px;
 }
 
-.form-group input {
-    width: 150px;
+.form-group input, select {
+    width: 166px;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    text-align: right;
-    font-size: 16px;
+    font-size: 14px;
     font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
+}
+
+input[type="text"], input[type="number"] {
+    text-align: right;
 }
 
 input[readonly] {
@@ -99,3 +103,50 @@ input[readonly] {
 .hidden {
     display: none;
 }
+
+.btn-proyecto {
+    background-color: #28a745;
+}
+.btn-proyecto:hover {
+    background-color: #218838;
+}
+
+#form-ventas button, #resumen-ventas button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    margin-top: 15px;
+}
+#btn-ver-reporte {
+    background-color: #17a2b8;
+}
+
+#resumen-ventas hr {
+    margin: 20px 0;
+    border: 0;
+    border-top: 1px solid #eee;
+}
+.resumen-linea {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+.resumen-linea span:first-child {
+    font-weight: 500;
+}
+.error-msg {
+    color: #dc3545;
+    text-align: center;
+    margin-top: 10px;
+}
+#vista-supervisor ul {
+    list-style-position: inside;
+    padding-left: 0;
+}
+
