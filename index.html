@@ -75,12 +75,22 @@
             </div>
             
             <div id="vista-vendedor" class="hidden">
-                <h2 id="welcome-vendedor">Bienvenido, [Vendedor]</h2>
+                <h2 id="welcome-vendedor">Bienvenido</h2>
                 <h3>Registrar Nueva Venta</h3>
-                <div class="form-group"><label for="input-mes">Mes</label><select id="input-mes"><option value="Agosto">Agosto</option><option value="Septiembre">Septiembre</option><option value="Octubre">Octubre</option><option value="Noviembre">Noviembre</option><option value="Diciembre">Diciembre</option></select></div>
-                <div class="form-group"><label for="input-fecha">Fecha de Venta</label><input type="date" id="input-fecha"></div>
-                <div class="form-group"><label for="input-paquete">Nombre del Paquete</label><input type="text" id="input-paquete" placeholder="Ej: Fibra 100 Megas"></div>
-                <div class="form-group"><label for="input-precio">Precio</label><input type="number" id="input-precio" placeholder="0.00"></div>
+                <div class="form-group"><label for="input-nombre-cliente">Nombre Cliente</label><input type="text" id="input-nombre-cliente"></div>
+                <div class="form-group"><label for="input-num-fisico">Número Físico (Código)</label><input type="text" id="input-num-fisico"></div>
+                <div class="form-group"><label for="input-monto">Monto del Paquete ($)</label><input type="number" id="input-monto" placeholder="Ej: 35.00"></div>
+                <div class="form-group"><label for="input-servicio">Servicio</label><input type="text" id="input-servicio" placeholder="Ej: Internet Residencial"></div>
+                <div class="form-group"><label for="input-fecha-pago">Fecha Pago Cliente</label><input type="date" id="input-fecha-pago"></div>
+                <div class="form-group"><label for="input-mes-aplica">Mes que Aplica</label><select id="input-mes-aplica"><option value="Enero">Enero</option><option value="Febrero">Febrero</option><option value="Marzo">Marzo</option><option value="Abril">Abril</option><option value="Mayo">Mayo</option><option value="Junio">Junio</option><option value="Julio">Julio</option><option value="Agosto">Agosto</option><option value="Septiembre">Septiembre</option><option value="Octubre">Octubre</option><option value="Noviembre">Noviembre</option><option value="Diciembre">Diciembre</option></select></div>
+                <div class="form-group"><label for="select-primario">Primario</label><select id="select-primario"><option value="Sí">Sí</option><option value="No">No</option></select></div>
+                <div class="form-group"><label for="input-conteo">Conteo (Cantidad Servicios)</label><input type="number" id="input-conteo" value="1"></div>
+                <div class="form-group"><label for="input-cantidad-primarios">Cantidad Servicios Primarios</label><input type="number" id="input-cantidad-primarios" value="1"></div>
+                <hr>
+                <p style="text-align:center; margin-bottom: 16px; color: #888;">Campos Opcionales</p>
+                <div class="form-group"><label for="input-cortes">Cortes ($)</label><input type="number" id="input-cortes" placeholder="0.00"></div>
+                <div class="form-group"><label for="input-devoluciones">Devoluciones ($)</label><input type="number" id="input-devoluciones" placeholder="0.00"></div>
+                <div class="form-group"><label for="input-descuento">Descuento ($)</label><input type="number" id="input-descuento" placeholder="0.00"></div>
                 <button id="btn-agregar-venta" class="btn btn-purple">Agregar Venta</button>
                 <button class="btn-logout btn btn-secondary">Cerrar Sesión</button>
             </div>
