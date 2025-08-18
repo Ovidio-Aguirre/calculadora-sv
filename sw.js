@@ -1,5 +1,5 @@
 // Define un nombre y versión para tu caché
-const CACHE_NAME = 'ventas-sv-cache-v1'; 
+const CACHE_NAME = 'ventas-sv-cache-v6'; 
 
 const urlsToCache = [
     '/',
@@ -47,6 +47,7 @@ self.addEventListener('activate', event => {
     })
   );
 });
+
 
 
 
