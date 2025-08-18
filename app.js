@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbykudCYVnzz4-nO-Q_oZmYCbXrbQg7xMU9tcsbJ-dH25FA9cfJqlojMiCpR2QD9iEjV/exec'; 
     // -------------------------------------------------------------------
 
-    // --- ELEMENTOS DEL DOM (COMPLETOS) ---
+    // --- ELEMENTOS DEL DOM ---
     const menuPrincipal = document.getElementById('menu-principal');
     const btnShowIva = document.getElementById('btn-show-iva');
     const btnShowRenta = document.getElementById('btn-show-renta');
@@ -29,10 +29,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const vistaVendedor = document.getElementById('vista-vendedor');
     const vistaSupervisor = document.getElementById('vista-supervisor');
     const welcomeVendedor = document.getElementById('welcome-vendedor');
-    const inputMes = document.getElementById('input-mes');
-    const inputFecha = document.getElementById('input-fecha');
-    const inputPaquete = document.getElementById('input-paquete');
-    const inputPrecio = document.getElementById('input-precio');
+    const inputNombreCliente = document.getElementById('input-nombre-cliente');
+    const inputNumFisico = document.getElementById('input-num-fisico');
+    const inputMonto = document.getElementById('input-monto');
+    const inputServicio = document.getElementById('input-servicio');
+    const inputFechaPago = document.getElementById('input-fecha-pago');
+    const inputMesAplica = document.getElementById('input-mes-aplica');
+    const selectPrimario = document.getElementById('select-primario');
+    const inputConteo = document.getElementById('input-conteo');
+    const inputCantidadPrimarios = document.getElementById('input-cantidad-primarios');
+    const inputCortes = document.getElementById('input-cortes');
+    const inputDevoluciones = document.getElementById('input-devoluciones');
+    const inputDescuento = document.getElementById('input-descuento');
     const btnAgregarVenta = document.getElementById('btn-agregar-venta');
     const inputNuevoUser = document.getElementById('input-nuevo-user');
     const inputNuevaPass = document.getElementById('input-nueva-pass');
@@ -88,71 +96,45 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (data.role === 'Vendedor') { currentUser = data.user; welcomeVendedor.textContent = `Bienvenido, ${data.user}`; vistaVendedor.classList.remove('hidden'); } 
                     else if (data.role === 'Supervisor') { vistaSupervisor.classList.remove('hidden'); }
                 } else { loginError.textContent = data.message; loginError.classList.remove('hidden'); }
-            }).catch(err => { loginError.textContent = 'Error de conexión.'; loginError.classList.remove('hidden'); console.error(err);})
+            }).catch(err => { loginError.textContent = 'Error de conexión. Revisa la implementación del script y la consola.'; loginError.classList.remove('hidden'); console.error(err);})
             .finally(() => { btnLogin.textContent = 'Ingresar'; btnLogin.disabled = false; });
     });
-
-    // --- LÓGICA DE AGREGAR VENTA (CORREGIDA) ---
-    btnAgregarVenta.addEventListener('click', () => {
-        if (!inputFecha.value || !inputPaquete.value || !inputPrecio.value) { alert('Completa todos los campos.'); return; }
-        const ventaData = { action: 'agregarVenta', vendedor: currentUser, mes: inputMes.value, fecha: inputFecha.value, paquete: inputPaquete.value, precio: parseFloat(inputPrecio.value) };
-        btnAgregarVenta.textContent = 'Guardando...'; btnAgregarVenta.disabled = true;
-        
-        // Esta es la parte corregida para que funcione en Live Server
-        fetch(SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors', // Importante para evitar el error de CORS en desarrollo
-            cache: 'no-cache',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(ventaData),
-            redirect: 'follow',
-        })
-        .then(() => {
-            // Como usamos 'no-cors', no podemos leer la respuesta, pero asumimos que fue exitosa.
-            alert('¡Venta guardada con éxito!');
-            inputPaquete.value = '';
-            inputPrecio.value = '';
-            inputFecha.value = '';
-            inputPaquete.focus();
-        })
-        .catch(err => {
-            console.error('Error:', err);
-            alert('Hubo un error al guardar la venta. Revisa la consola.');
-        })
-        .finally(() => {
-            btnAgregarVenta.textContent = 'Agregar Venta';
-            btnAgregarVenta.disabled = false;
-        });
-    });
     
+    // --- LÓGICA DE AGREGAR VENTA ---
+    btnAgregarVenta.addEventListener('click', () => {
+        if (!inputNombreCliente.value || !inputMonto.value || !inputFechaPago.value) { alert('Completa al menos Nombre, Monto y Fecha de Pago.'); return; }
+        const ventaData = {
+            gestor: currentUser, nombreCliente: inputNombreCliente.value.trim(), numFisico: inputNumFisico.value.trim(),
+            monto: inputMonto.value, servicio: inputServicio.value.trim(), fechaPago: inputFechaPago.value,
+            mesAplica: inputMesAplica.value, primario: selectPrimario.value, conteo: inputConteo.value,
+            cantidadPrimarios: inputCantidadPrimarios.value, cortes: inputCortes.value || '0',
+            devoluciones: inputDevoluciones.value || '0', descuento: inputDescuento.value || '0'
+        };
+        btnAgregarVenta.textContent = 'Guardando...'; btnAgregarVenta.disabled = true;
+        fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ action: 'agregarVenta', venta: ventaData })})
+            .then(() => {
+                alert('¡Venta guardada con éxito!');
+                inputNombreCliente.value = ''; inputNumFisico.value = ''; inputMonto.value = '';
+                inputServicio.value = ''; inputFechaPago.value = ''; inputConteo.value = '1';
+                inputCantidadPrimarios.value = '1'; inputCortes.value = '';
+                inputDevoluciones.value = ''; inputDescuento.value = '';
+                inputNombreCliente.focus();
+            }).catch(err => { console.error('Error:', err); alert('Hubo un error al guardar la venta.'); })
+            .finally(() => { btnAgregarVenta.textContent = 'Agregar Venta'; btnAgregarVenta.disabled = false; });
+    });
+
     // --- LÓGICA DE CREAR USUARIO ---
     btnCrearUsuario.addEventListener('click', () => {
         const nuevoUsuario = inputNuevoUser.value.trim(); const nuevaPassword = inputNuevaPass.value.trim(); const nuevoRol = selectNuevoRol.value;
         if (!nuevoUsuario || !nuevaPassword) { alert('Completa usuario y contraseña.'); return; }
         btnCrearUsuario.textContent = 'Creando...'; btnCrearUsuario.disabled = true;
         const userData = { action: 'crearUsuario', nuevoUsuario, nuevaPassword, nuevoRol };
-        
-        fetch(SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            cache: 'no-cache',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(userData),
-            redirect: 'follow',
-        })
-        .then(() => {
-            alert(`¡Usuario "${nuevoUsuario}" creado con éxito!`);
-            inputNuevoUser.value = '';
-            inputNuevaPass.value = '';
-        })
-        .catch(err => {
-            console.error('Error:', err);
-            alert('Hubo un error al crear el usuario.');
-        })
-        .finally(() => {
-            btnCrearUsuario.textContent = 'Crear Usuario';
-            btnCrearUsuario.disabled = false;
-        });
+        fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(userData) })
+            .then(() => {
+                alert(`¡Usuario "${nuevoUsuario}" creado!`);
+                inputNuevoUser.value = ''; inputNuevaPass.value = '';
+            }).catch(err => { console.error('Error:', err); alert('Hubo un error al crear el usuario.'); })
+            .finally(() => { btnCrearUsuario.textContent = 'Crear Usuario'; btnCrearUsuario.disabled = false; });
     });
 
     // --- SERVICE WORKER ---
