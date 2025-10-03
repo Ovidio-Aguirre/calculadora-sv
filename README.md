@@ -1,6 +1,6 @@
 # Sistema de Gestión de Ventas y Calculadoras (PWA)
 
-![Sistema de Ventas](https://i.imgur.com/link-a-tu-imagen.png) ## 📜 Descripción
+Sistema de Ventas ## 📜 Descripción
 
 Este proyecto es una **Aplicación Web Progresiva (PWA)** diseñada para equipos de ventas. Combina herramientas de utilidad diaria con un sistema robusto para el registro y seguimiento de ventas, todo centralizado en una interfaz moderna y fácil de usar.
 
